@@ -34,3 +34,14 @@ Route::get('/coba', function() {
         'arr_bersarang' => [[], ["Nasi", "Pagi", "Tahu"], ["Padi", "Siang", "Rendang"], ["Ayam Goreng", "Cincau", "Tahu"], ["Soto Ayam", "Sop Buah", "Jus Alpukat"]]
     ]);
 });
+
+Route::get('/page1', function() {
+    return view('belajarMembagi.page1', ['title' => 'Halaman Satu']);
+});
+
+Route::get('/page2', function() {
+    return view('belajarMembagi.page2', [
+        'title' => 'Halaman Dua',
+        'include_bootstrap' => false
+    ]);
+});
