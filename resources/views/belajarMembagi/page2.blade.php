@@ -40,5 +40,20 @@
                 the cached, compiled view.
             </p>
         @endverbatim
+
+        @if ($cek_halaman_sebelah)
+            @php
+                var_dump($cek_halaman_sebelah);
+            @endphp
+            Halaman page1.blade.php Ada
+            <p>
+                <a href="/page1">Ke page 1</a>
+            </p>
+        @else
+        @php
+            var_dump($cek_halaman_sebelah);
+        @endphp
+        Halaman page1.blade.php Tidak Ada
+        @endif
     </div>
 @endsection

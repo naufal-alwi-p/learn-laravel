@@ -44,5 +44,19 @@
                 being yielded is undefined
             </p>
         @endverbatim
+        @if ($cek_halaman_sebelah)
+            @php
+                var_dump($cek_halaman_sebelah);
+            @endphp
+            Halaman page2.blade.php Ada
+            <p>
+                <a href="/page2">Ke page 2</a>
+            </p>
+        @else
+        @php
+            var_dump($cek_halaman_sebelah);
+        @endphp
+        Halaman page2.blade.php Tidak Ada
+        @endif
     </div>
 @endsection
