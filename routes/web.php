@@ -132,3 +132,7 @@ Route::get('halaman_a', function() {
 
     -> php artisan view:clear
 */
+
+Route::get('/cek_section', function() {
+    return View::make('sectionCheck.cekSection');
+});
