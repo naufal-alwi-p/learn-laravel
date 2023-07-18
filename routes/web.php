@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\CobaController;
+use App\Http\Controllers\SectionCheckController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 
@@ -33,23 +35,7 @@ Route::get('/', function () {
 });
 
 // Views may also be returned using the View facade
-Route::get('/coba', function() {
-    return View::make('coba', [
-        'nama' => 'Randi',
-        'ada_html1' => '<b>HTML ini otomatis di-escape oleh Laravel</b>',
-        'ada_html2' => '<b>tag b HTML ini akan dibaca oleh browser</b>',
-        'data_json' => [
-            'nama' => 'Naufal A.P',
-            'umur' => 19,
-            'mahasiswa' => true,
-            'tinggi' => 170.2
-        ],
-        'data' => [1, 2, 3, 4, 'Randi', 5, 6, 7],
-        'kosong' => 0,
-        'arr_kosong' => [],
-        'arr_bersarang' => [[], ["Nasi", "Pagi", "Tahu"], ["Padi", "Siang", "Rendang"], ["Ayam Goreng", "Cincau", "Tahu"], ["Soto Ayam", "Sop Buah", "Jus Alpukat"]]
-    ]);
-});
+Route::get('/coba', [CobaController::class, 'coba_controller']);
 
 /*
     As you can see, the first argument passed to the view helper corresponds to the name of the view file in the resources/views
@@ -61,33 +47,28 @@ Route::get('/coba', function() {
     of your application's routes / controllers like so
 
     Note: View directory names should not contain the . character.
+
+    If you need to determine if a view exists, you may use the View facade. The exists method will return true if the view exists
 */
 
-Route::get('/page1', function() {
-    return view('belajarMembagi.page1', [
-        'title' => 'Halaman Satu',
-        // If you need to determine if a view exists, you may use the View facade. The exists method will return true if the view exists
-        'cek_halaman_sebelah' => View::exists('belajarMembagi.page2')
-    ]);
-});
+/*
+    Once you have written a controller class and method, you may define a route to the controller method like so
 
-Route::get('/page2', function() {
-    return view('belajarMembagi.page2', [
-        'title' => 'Halaman Dua',
-        'include_bootstrap' => false,
-        'cek_halaman_sebelah' => View::exists('belajarMembagi.page1')
-    ]);
-});
+    When an incoming request matches the specified route URI, the page1_controller method on the
+    App\Http\Controllers\CobaController class will be invoked and the route parameters will be passed to the method.
+*/
+Route::get('/page1', [CobaController::class, 'page1_controller']);
+
+Route::get('/page2', [CobaController::class, 'page2_controller']);
 
 /*
     Using the View facade's first method, you may create the first view that exists in a given array of views. This may be
     useful if your application or package allows views to be customized or overwritten
+
+    Jika view ada semua maka akan dipilih index yang paling kecil
 */
 
-Route::get('/halaman_coba', function() {
-    // Jika view ada semua maka akan dipilih index yang paling kecil
-    return View::first(['firstView.b', 'firstView.a'], ['data' => 'Hello Apa Kabar !!!']);
-});
+Route::get('/halaman_coba', [CobaController::class, 'halaman_coba_controller']);
 
 /*
     As you saw in the previous examples, you may pass an array of data to views to make that data available to the view
@@ -100,11 +81,7 @@ Route::get('/halaman_coba', function() {
     continue chaining methods before returning the view
 */
 
-Route::get('halaman_a', function() {
-    return View::make('firstView.a')
-        ->with('data', 'Kamu lagi di halaman A')
-        ->with('info', 'Data ini dikirim menggunakan method with()');
-});
+Route::get('halaman_a', [CobaController::class, 'halaman_a_controller']);
 
 /*
     Sharing Data With All Views
@@ -133,6 +110,12 @@ Route::get('halaman_a', function() {
     -> php artisan view:clear
 */
 
-Route::get('/cek_section', function() {
-    return View::make('sectionCheck.cekSection');
+/*
+    When registering routes for single action controllers, you do not need to specify a controller method. Instead, you may
+    simply pass the name of the controller to the router
+*/
+Route::get('/cek_section', SectionCheckController::class);
+
+Route::get('/tes', function() {
+    return 'Halo, Apa kabar ?!';
 });
