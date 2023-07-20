@@ -116,6 +116,220 @@ Route::get('halaman_a', [CobaController::class, 'halaman_a_controller']);
 */
 Route::get('/cek_section', SectionCheckController::class);
 
+/*
+    Basic Routing
+
+    The most basic Laravel routes accept a URI and a closure, providing a very simple and expressive method of defining routes
+    and behavior without complicated routing configuration files
+*/
 Route::get('/tes', function() {
     return 'Halo, Apa kabar ?!';
 });
+
+/*
+    The Default Route Files
+
+    All Laravel routes are defined in your route files, which are located in the routes directory. These files are automatically
+    loaded by your application's App\Providers\RouteServiceProvider. The routes/web.php file defines routes that are for your
+    web interface. These routes are assigned the web middleware group, which provides features like session state and CSRF
+    protection. The routes in routes/api.php are stateless and are assigned the api middleware group.
+
+    For most applications, you will begin by defining routes in your routes/web.php file. The routes defined in routes/web.php
+    may be accessed by entering the defined route's URL in your browser.
+
+    Routes defined in the routes/api.php file are nested within a route group by the RouteServiceProvider. Within this
+    group, the /api URI prefix is automatically applied so you do not need to manually apply it to every route in the
+    file. You may modify the prefix and other route group options by modifying your RouteServiceProvider class.
+
+    Available Router Methods
+
+    The router allows you to register routes that respond to any HTTP verb:
+    - Route::get($uri, $callback);
+    - Route::post($uri, $callback);
+    - Route::put($uri, $callback);
+    - Route::patch($uri, $callback);
+    - Route::delete($uri, $callback);
+    - Route::options($uri, $callback);
+
+    Sometimes you may need to register a route that responds to multiple HTTP verbs. You may do so using the match method.
+    Or, you may even register a route that responds to all HTTP verbs using the any method:
+    Route::match(['get', 'post'], '/', function () {
+        // Your Code ...
+    });
+    
+    Route::any('/', function () {
+        // Your Code ...
+    });
+
+
+    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    Note: When defining multiple routes that share the same URI, routes using the get, post, put, patch, delete, and options
+    methods should be defined before routes using the any, match, and redirect methods. This ensures the incoming request
+    is matched with the correct route.
+    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+*/
+
+/*
+    Dependency Injection
+
+    You may type-hint any dependencies required by your route in your route's callback signature. The declared dependencies will
+    automatically be resolved and injected into the callback by the Laravel service container. For example, you may type-hint
+    the Illuminate\Http\Request class to have the current HTTP request automatically injected into your route callback
+*/
+
+Route::get('/injeksi_dependensi', [CobaController::class, 'injeksi_dependensi_controller']);
+
+/*
+    Redirect Routes
+
+    If you are defining a route that redirects to another URI, you may use the Route::redirect method. This method provides
+    a convenient shortcut so that you do not have to define a full route or controller for performing a simple redirect
+*/
+
+Route::redirect('/dependency_injection', '/injeksi_dependensi');
+
+/*
+    By default, Route::redirect returns a 302 status code. You may customize the status code using the optional third parameter
+
+    Route::redirect('/here', '/there', 301);
+
+    Or, you may use the Route::permanentRedirect method to return a 301 status code
+
+    Route::permanentRedirect('/here', '/there');
+
+    Warning: When using route parameters in redirect routes, the following parameters are reserved by Laravel and cannot be
+    used: destination and status.
+*/
+
+/*
+    View Routes
+
+    If your route only needs to return a view, you may use the Route::view method. Like the redirect method, this method provides
+    a simple shortcut so that you do not have to define a full route or controller. The view method accepts a URI as its first
+    argument and a view name as its second argument. In addition, you may provide an array of data to pass to the view as an
+    optional third argument
+
+    Warning: When using route parameters in view routes, the following parameters are reserved by Laravel and cannot be
+    used: view, data, status, and headers.
+*/
+
+Route::view('/see_page', 'learn.see_page', ['title' => 'Memahami Route::view()', 'data' => 'Halo! Selamat Datang']);
+
+/*
+    Route Parameters
+
+    Required Parameters
+
+    Sometimes you will need to capture segments of the URI within your route. For example, you may need to capture a user's ID
+    from the URL. You may do so by defining route parameters
+
+    You may define as many route parameters as required by your route
+*/
+
+Route::get('/user/{id}/{menu}', [CobaController::class, 'user_controller']);
+
+/*
+    Route parameters are always encased within {} braces and should consist of alphabetic characters. Underscores (_) are
+    also acceptable within route parameter names. Route parameters are injected into route callbacks / controllers based
+    on their order - the names of the route callback / controller arguments do not matter.
+
+    Parameters & Dependency Injection
+
+    If your route has dependencies that you would like the Laravel service container to automatically inject into your route's
+    callback, you should list your route parameters after your dependencies
+*/
+
+/*
+    Optional Parameters
+
+    Occasionally you may need to specify a route parameter that may not always be present in the URI. You may do so by placing
+    a ? mark after the parameter name. Make sure to give the route's corresponding variable a default value
+*/
+
+Route::get('/cart/{data?}/{status?}', [CobaController::class, 'cart_controller'])->whereAlpha('data')->whereNumber('status');
+
+/*
+    Regular Expression Constraints
+
+    You may constrain the format of your route parameters using the where method on a route instance. The where method accepts
+    the name of the parameter and a regular expression defining how the parameter should be constrained
+
+    For convenience, some commonly used regular expression patterns have helper methods that allow you to quickly add pattern
+    constraints to your routes
+
+    If the incoming request does not match the route pattern constraints, a 404 HTTP response will be returned.
+*/
+
+/*
+    Named Routes
+
+    Named routes allow the convenient generation of URLs or redirects for specific routes. You may specify a name for a route
+    by chaining the name method onto the route definition
+
+    You may also specify route names for controller actions
+
+    Route names should always be unique.
+*/
+
+Route::get('/big_brain/{info?}', [CobaController::class, 'big_brain_controller'])->name('senku');
+
+/*
+    Route Groups
+
+    Route groups allow you to share route attributes, such as middleware, across a large number of routes without needing to
+    define those attributes on each individual route.
+
+    Nested groups attempt to intelligently "merge" attributes with their parent group. Middleware and where conditions are merged
+    while names and prefixes are appended. Namespace delimiters and slashes in URI prefixes are automatically added where appropriate.
+
+    If a group of routes all utilize the same controller, you may use the controller method to define the common controller for all
+    of the routes within the group. Then, when defining the routes, you only need to provide the controller method that they invoke
+*/
+
+Route::controller(CobaController::class)->group(function() {
+    Route::get('/coba_lagi1', 'coba_lagi1_controller');
+
+    Route::get('/coba_lagi2', 'coba_lagi2_controller');
+});
+
+/*
+    Route Prefixes
+
+    The prefix method may be used to prefix each route in the group with a given URI. For example, you may want to prefix all route
+    URIs within the group with admin
+*/
+
+Route::prefix('buku')->group(function() {
+    Route::get('/tulis', [CobaController::class, 'tulis_controller']); // "/buku/tulis"
+
+    Route::get('/paket', [CobaController::class, 'paket_controller']); // "/buku/paket"
+});
+
+/*
+    Route Name Prefixes
+
+    The name method may be used to prefix each route name in the group with a given string. For example, you may want to prefix
+    the names of all of the routes in the group with admin. The given string is prefixed to the route name exactly as it is
+    specified, so we will be sure to provide the trailing . character in the prefix
+*/
+
+Route::name('teknik_')->group(function() {
+    Route::get('/teori', [CobaController::class, 'teori_controller'])->name('theory'); // "teknik_theory"
+
+    Route::get('/praktek', [CobaController::class, 'praktek_controller'])->name('practice'); // "teknik_praktek"
+});
+
+/*
+    Fallback Routes
+
+    Using the Route::fallback method, you may define a route that will be executed when no other route matches the incoming request.
+    Typically, unhandled requests will automatically render a "404" page via your application's exception handler. However, since
+    you would typically define the fallback route within your routes/web.php file, all middleware in the web middleware group will
+    apply to the route. You are free to add additional middleware to this route as needed
+
+    Warning: The fallback route should always be the last route registered by your application.
+*/
+
+// Route::fallback(function() {
+//     return view('error', ['title' => 'Error Page']);
+// });

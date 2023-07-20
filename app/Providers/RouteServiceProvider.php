@@ -36,5 +36,18 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware('web')
                 ->group(base_path('routes/web.php'));
         });
+
+        /*
+            Global Constraints
+
+            If you would like a route parameter to always be constrained by a given regular expression, you may use the pattern method.
+            You should define these patterns in the boot method of your App\Providers\RouteServiceProvider class
+
+            Once the pattern has been defined, it is automatically applied to all routes using that parameter name
+        */
+
+        Route::pattern('id', '[0-9]');
+
+
     }
 }
