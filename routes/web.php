@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CobaController;
+use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\SectionCheckController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
@@ -333,3 +334,5 @@ Route::name('teknik_')->group(function() {
 // Route::fallback(function() {
 //     return view('error', ['title' => 'Error Page']);
 // });
+
+Route::get('/belajar_collection', [CollectionController::class, 'belajar_collection_controller'])->name('collect');
