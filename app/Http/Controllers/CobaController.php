@@ -221,4 +221,8 @@ class CobaController extends Controller
 
         return view('learn.praktek', $data);
     }
+
+    public function php_info_controller() {
+        return phpinfo();
+    }
 }

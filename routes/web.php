@@ -336,3 +336,5 @@ Route::name('teknik_')->group(function() {
 // });
 
 Route::get('/belajar_collection', [CollectionController::class, 'belajar_collection_controller'])->name('collect');
+
+Route::get('/php_info', [CobaController::class, 'php_info_controller']);
