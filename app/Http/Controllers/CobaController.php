@@ -225,4 +225,13 @@ class CobaController extends Controller
     public function php_info_controller() {
         return phpinfo();
     }
+
+    public function formulir_controller(Request $request) {
+        $data = [
+            'title' => 'Formulir',
+            'semua' => $request->all()
+        ];
+
+        return view('form.form1', $data);
+    }
 }

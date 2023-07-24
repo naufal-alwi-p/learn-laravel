@@ -347,3 +347,5 @@ Route::get('/list_route', function() {
 
     return view('list_route', $data);
 });
+
+Route::get('/formulir', [CobaController::class, 'formulir_controller']);
