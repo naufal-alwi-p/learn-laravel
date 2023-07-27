@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CollegeSchedule;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
 
 /*
@@ -233,5 +235,82 @@ class CobaController extends Controller
         ];
 
         return view('form.form1', $data);
+    }
+
+    /*
+        Once you have configured your database connection, you may run queries using the DB facade. The DB facade provides
+        methods for each type of query: select, update, insert, delete, and statement.
+    */
+
+    public function percobaan_buat_form_controller(Request $request) {
+        $data = ['title' => 'Form Tabel percobaan_data'];
+
+        if($request->has(['nama', 'uang', 'status', 'npm', 'ipk', 'btn'])) {
+            if($request->input('btn') === 'tambah') {
+                $input = [
+                    'nama' => $request->string('nama')->toString(),
+                    'uang' => $request->integer('uang'),
+                    'status' => $request->string('status')->contains('Benar'),
+                    'npm' => $request->string('npm')->toString(),
+                    'ipk' => $request->float('ipk')
+                ];
+
+                // The query builder also provides an insert method that may be used to insert records into the database table.
+                // The insert method accepts an array of column names and values
+                $data['status_query'] = DB::table('percobaan_buat')->insert($input);
+            }
+        }
+
+        $data['list'] = DB::select('SELECT * FROM percobaan_buat');
+        // Buat menformat angka menjadi mata uang IDR (Rupiah)
+        $formatMoney = new \NumberFormatter('id_ID', \NumberFormatter::CURRENCY);
+
+        foreach($data['list'] as $value) {
+            $value->uang = $formatMoney->formatCurrency($value->uang, 'IDR');
+            $value->status = ($value->status) ? "True" : "False";
+        }
+
+        return view('form.percobaan_buat_form', $data);
+    }
+
+    public function data_diri_form_controller(Request $request) {
+        $data = ['title' => 'Form Tabel data_diri'];
+
+        if($request->has(['nama', 'lahir', 'tahun_masuk', 'btn'])) {
+            if($request->input('btn') === 'tambah') {
+                $input = [
+                    $request->string('nama')->toString(),
+                    $request->date('lahir')->toDateString(),
+                    $request->integer('tahun_masuk')
+                ];
+
+                // To run a basic SELECT query, you may use the select method on the DB facade
+                $data['status_query'] = DB::insert('INSERT INTO data_diri (nama, tanggal_lahir, tahun_masuk) VALUES (?, ?, ?)', $input);
+            }
+        }
+
+        $data['list'] = DB::select('SELECT * FROM data_diri');
+
+        return view('form.data_diri_form', $data);
+    }
+
+    public function jadwal_kuliah_controller(Request $request) {
+        $data = ['title' => 'Formulir Jadwal Kuliah'];
+
+        if($request->has(['kode', 'mata_kuliah', 'sks', 'btn'])) {
+            if($request->input('btn') === 'tambah') {
+                $jadwal_kuliah = new CollegeSchedule;
+
+                $jadwal_kuliah->kode = $request->string('kode')->toString();
+                $jadwal_kuliah->mata_kuliah = $request->string('mata_kuliah')->toString();
+                $jadwal_kuliah->sks = $request->integer('sks');
+
+                $data['status_query'] = $jadwal_kuliah->save();
+            }
+        }
+
+        $data['list'] = CollegeSchedule::all();
+
+        return view('form.jadwal_kuliah_form', $data);
     }
 }

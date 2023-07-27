@@ -349,3 +349,9 @@ Route::get('/list_route', function() {
 });
 
 Route::get('/formulir', [CobaController::class, 'formulir_controller']);
+
+Route::get('/formulir-percobaan-buat', [CobaController::class, 'percobaan_buat_form_controller']);
+
+Route::get('/formulir-data-diri', [CobaController::class, 'data_diri_form_controller']);
+
+Route::get('/formulir-jadwal-kuliah', [CobaController::class, 'jadwal_kuliah_controller']);
