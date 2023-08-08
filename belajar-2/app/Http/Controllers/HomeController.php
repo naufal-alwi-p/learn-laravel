@@ -13,7 +13,7 @@ class HomeController extends Controller
             'home_nav' => true
         ];
 
-        $data['posts'] = Post::latest('updated_at')->get();
+        $data['posts'] = Post::with(['user', 'category'])->latest('updated_at')->get();
 
         return view('home', $data);
     }

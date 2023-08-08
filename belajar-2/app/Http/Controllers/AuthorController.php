@@ -12,7 +12,7 @@ class AuthorController extends Controller
     public function author_post_controller(User $author) {
         $data = [
             'title' => $author->name,
-            'posts' => $author->posts()->latest()->get()
+            'posts' => $author->posts()->with('category')->latest()->get()
         ];
 
         return view('author', $data);

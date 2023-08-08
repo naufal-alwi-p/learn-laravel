@@ -12,8 +12,6 @@ function searchQuery() {
     xhr.addEventListener('load', function() {
             const hasil = JSON.parse(xhr.response).result;
             content.innerHTML = "";
-            
-            console.log(hasil);
 
             size = hasil.length;
 

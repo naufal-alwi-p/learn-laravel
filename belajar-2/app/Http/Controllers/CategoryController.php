@@ -12,7 +12,7 @@ class CategoryController extends Controller
     public function category_controller(Category $kategori) {
         $data = [
             'title' => $kategori->category,
-            'posts' => $kategori->posts()->latest()->get()
+            'posts' => $kategori->posts()->with('user')->latest()->get()
         ];
 
         return view('category', $data);
