@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\SessionLearnController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -41,5 +42,5 @@ Route::get('/categories', [CategoryController::class, 'categories_controller']);
 Route::prefix('belajar-laravel')->group(function() {
     Route::get('/', [HomeController::class, 'belajar_home_controller']); // "/belajar-laravel"
 
-    // Route::get('/session', function() {});
+    Route::get('/session', [SessionLearnController::class, 'belajar_session_controller']);
 });
