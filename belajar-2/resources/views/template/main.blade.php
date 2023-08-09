@@ -7,14 +7,15 @@
         <title>{{ $website_name }} | {{ $title }}</title>
         <link rel="shortcut icon" href="/favicon.png" type="image/png">
         @include('component.CssBootstrap')
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     </head>
     <body class="bg-body-tertiary">
-        @include('component.navbar')
+        @includeUnless(Request::is("belajar-laravel*"), 'component.navbar')
         
         <div class="container">
             @yield('content')
             
-            @include('component.JsBootstrap')
         </div>
+        @include('component.JsBootstrap')
     </body>
 </html>

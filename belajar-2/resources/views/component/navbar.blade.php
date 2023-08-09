@@ -18,6 +18,8 @@
             </a>
             <ul class="dropdown-menu">
               <li><a @class(['dropdown-item', 'fw-bold' => isset($new_post_nav)]) href="/new-post">Create New Post</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a @class(['dropdown-item']) href="/belajar-laravel">Belajar Laravel</a></li>
             </ul>
           </li>
         </ul>

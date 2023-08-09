@@ -36,3 +36,10 @@ Route::get('/new-post', [PostController::class, 'new_post_controller']);
 Route::post('/new-post-handler', [PostController::class, 'new_post_handler_controller']);
 
 Route::get('/categories', [CategoryController::class, 'categories_controller']);
+
+// Buat Belajar Materi Laravel
+Route::prefix('belajar-laravel')->group(function() {
+    Route::get('/', [HomeController::class, 'belajar_home_controller']); // "/belajar-laravel"
+
+    // Route::get('/session', function() {});
+});
