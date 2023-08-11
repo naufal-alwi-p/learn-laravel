@@ -60,6 +60,7 @@ function searchQuery() {
     xhr.open("POST", "http://127.0.0.1:8000/search-post-author");
 
     xhr.setRequestHeader("content-type", "application/json");
+    xhr.setRequestHeader("X-CSRF-TOKEN", token);
 
     xhr.send(data);
 }

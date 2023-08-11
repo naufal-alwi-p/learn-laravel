@@ -1,8 +1,6 @@
 const search = document.querySelector('.form-control');
 const content = document.querySelector('.isi');
 
-console.log(window.location.href.split("/").pop());
-
 search.addEventListener('input', searchQuery);
 
 function searchQuery() {
@@ -62,6 +60,7 @@ function searchQuery() {
     xhr.open("POST", "http://127.0.0.1:8000/search-post-category");
 
     xhr.setRequestHeader("content-type", "application/json");
+    xhr.setRequestHeader("X-CSRF-TOKEN", token);
 
     xhr.send(data);
 }

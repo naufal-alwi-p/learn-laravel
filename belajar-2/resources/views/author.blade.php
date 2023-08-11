@@ -27,5 +27,9 @@
         @endforelse
     </div>
 
+    <script>
+        const token = "{{ csrf_token() }}";
+    </script>
+
     <script src="/js/author_ajax.js"></script>
 @endsection

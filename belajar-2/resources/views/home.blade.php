@@ -30,5 +30,9 @@
         @endforelse
       </div>
 
+      <script>
+        const token = "{{ csrf_token() }}";
+      </script>
+
       <script src="/js/home_ajax.js"></script>
 @endsection
