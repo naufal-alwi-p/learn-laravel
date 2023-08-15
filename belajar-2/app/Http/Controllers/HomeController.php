@@ -19,10 +19,12 @@ class HomeController extends Controller
         return view('home', $data);
     }
 
-    public function belajar_home_controller() {
+    public function belajar_index_controller() {
+        $listRoute = collect(Route::getRoutes()->getRoutesByMethod()['GET']);
+
         $data = [
             'title' => 'Daftar Isi',
-            'links' => collect(Route::getRoutes()->getRoutesByMethod()['GET'])->filter(fn($route) => ($route->getPrefix() === "/belajar-laravel"))->values()->skip(1)->all()
+            'links' => $listRoute->filter(fn($route) => ($route->getPrefix() === '/belajar-laravel'))->values()->skip(1)->all()
         ];
 
         return view('belajar.index', $data);
