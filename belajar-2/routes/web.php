@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\RequestLearnController;
 use App\Http\Controllers\ResponseLearnController;
 use App\Http\Controllers\SessionLearnController;
 use Illuminate\Support\Facades\Route;
@@ -82,5 +83,16 @@ Route::prefix('belajar-laravel')->group(function() {
         Route::get('/download-file', [ResponseLearnController::class, 'download_file_controller']);
 
         Route::get('/file-response', [ResponseLearnController::class, 'file_response_controller']);
+    });
+
+    // Belajar Request Laravel
+    Route::get('/request', [RequestLearnController::class, 'request_index_controller']);
+
+    Route::prefix('/request')->group(function() {
+        Route::get('/accessing-request-http', [RequestLearnController::class, 'accessing_request_controller']);
+
+        Route::get('/form-input-request-http', [RequestLearnController::class, 'form_input_request_controller']);
+
+        Route::post('/form-input-request-http', [RequestLearnController::class, 'form_input_result_controller']);
     });
 });
