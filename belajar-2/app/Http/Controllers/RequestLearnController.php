@@ -15,7 +15,7 @@ class RequestLearnController extends Controller
             'links' => $listLink->filter(fn($route) => ($route->getPrefix() === 'belajar-laravel/request'))->values()
         ];
 
-        return view('belajar.request.index', $data);
+        return view('belajar.index_2', $data);
     }
 
     /*

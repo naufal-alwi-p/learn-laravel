@@ -17,7 +17,7 @@ class ResponseLearnController extends Controller
             'links' => $listRoute->filter(fn($route) => ($route->getPrefix() === 'belajar-laravel/response'))->values()->all()
         ];
 
-        return view('belajar.response.index', $data);
+        return view('belajar.index_2', $data);
     }
 
     public function response_string_controller(Request $request) {
