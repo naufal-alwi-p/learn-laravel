@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\FileStorageLearnController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\RequestLearnController;
@@ -94,5 +95,40 @@ Route::prefix('belajar-laravel')->group(function() {
         Route::get('/form-input-request-http', [RequestLearnController::class, 'form_input_request_controller']);
 
         Route::post('/form-input-request-http', [RequestLearnController::class, 'form_input_result_controller']);
+    });
+
+    // Belajar File Storage Laravel
+    Route::get('/file-storage', [FileStorageLearnController::class, 'file_storage_index_controller']);
+
+    Route::prefix('file-storage')->group(function() {
+        Route::get('/local-disk', [FileStorageLearnController::class, 'local_disk_controller']);
+
+        Route::get('/public-disk', [FileStorageLearnController::class, 'public_disk_controller']);
+
+        Route::get('/general', [FileStorageLearnController::class, 'general_storage_controller']);
+
+        Route::get('/download-file', [FileStorageLearnController::class, 'download_file_controller']);
+
+        // Permasalahan yang terjadi yaitu, video tidak bisa lompat ke timestamp yang diinginkan
+        // Penjelasan Masalah Lebih Detail: https://stackoverflow.com/questions/8088364/html5-video-will-not-loop
+        Route::get('/video-response-for-chrome/{filename}', [FileStorageLearnController::class, 'video_response_for_chrome_controller'])->name('file.video-response-for-chrome');
+
+        Route::get('/form-file-upload', [FileStorageLearnController::class, 'form_file_display_controller'])->name('file.form');
+
+        Route::post('/form-file-upload', [FileStorageLearnController::class, 'form_file_process_controller']);
+
+        Route::get('/uploaded-file-display', [FileStorageLearnController::class, 'uploaded_file_display'])->name('file.uploaded_display');
+
+        Route::get('/delete-uploaded-file/{filename}', [FileStorageLearnController::class, 'delete_uploaded_file'])->name('file.uploaded_delete');
+
+        Route::get('/form-upload-dropbox', [FileStorageLearnController::class, 'form_upload_dropbox_controller'])->name('file.dropbox_form');
+
+        Route::post('/form-upload-dropbox', [FileStorageLearnController::class, 'form_process_dropbox_controller']);
+
+        Route::get('/dropbox-display', [FileStorageLearnController::class, 'dropbox_file_controller'])->name('file.display_dropbox_file');
+
+        Route::get('/dropbox-file-uploaded-response/{mime}/{filename}', [FileStorageLearnController::class, 'dropbox_file_uploaded_response_controller'])->name('file.dropbox_file');
+
+        Route::delete('/delete-dropbox-uploaded-file', [FileStorageLearnController::class, 'delete_dropbox_uploaded_file_controller']);
     });
 });
