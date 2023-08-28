@@ -1,5 +1,6 @@
 const search = document.querySelector('.form-control');
 const content = document.querySelector('.isi');
+const protocolHostname = `${window.location.protocol}//${window.location.host}`;
 
 search.addEventListener('input', searchQuery);
 
@@ -57,7 +58,7 @@ function searchQuery() {
         `;
     });
 
-    xhr.open("POST", "http://127.0.0.1:8000/search-post-author");
+    xhr.open("POST", protocolHostname + "/search-post-author");
 
     xhr.setRequestHeader("content-type", "application/json");
     xhr.setRequestHeader("X-CSRF-TOKEN", token);

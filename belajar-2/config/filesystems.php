@@ -58,7 +58,7 @@ return [
 
         'dropbox' => [
             'driver' => 'dropbox_driver',
-            'token' => 'sl.Bk7abVs5Vaeof8knY6iGofWITG-w7TbUJSFajw3O5seowCRvaJ72i25_s3xTNjf6SplrgGVgoO0GTXu6vsyTvhOyZF6IRqXiyqEYfuEGzhqychpcr9lsAqBI6zoj9LfWrM6hveeMqpFn6ZQ',
+            'token' => env('DROPBOX_TOKEN'),
             // Note: Because Dropbox is not case-sensitive you’ll need to set the 'case_sensitive' option to false.
             'settings' => ['case_sensitive' => false]
         ]
