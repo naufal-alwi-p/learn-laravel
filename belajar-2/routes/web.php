@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\EncryptionLearnController;
 use App\Http\Controllers\FileStorageLearnController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
@@ -131,4 +132,9 @@ Route::prefix('belajar-laravel')->group(function() {
 
         Route::delete('/delete-dropbox-uploaded-file', [FileStorageLearnController::class, 'delete_dropbox_uploaded_file_controller']);
     });
+
+    // Belajar Encryption Laravel
+    Route::get('/encryption', [EncryptionLearnController::class, 'encryption_controller']);
+
+    Route::post('/encryption', [EncryptionLearnController::class, 'encryption_process_controller']);
 });
