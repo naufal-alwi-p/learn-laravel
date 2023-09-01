@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EncryptionLearnController;
 use App\Http\Controllers\FileStorageLearnController;
+use App\Http\Controllers\HashLearnController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\RequestLearnController;
@@ -137,4 +138,9 @@ Route::prefix('belajar-laravel')->group(function() {
     Route::get('/encryption', [EncryptionLearnController::class, 'encryption_controller']);
 
     Route::post('/encryption', [EncryptionLearnController::class, 'encryption_process_controller']);
+
+    // Belajar Hash Laravel
+    Route::get('/hash', [HashLearnController::class, 'hash_controller']);
+
+    Route::post('/hash', [HashLearnController::class, 'hash_process_controller']);
 });
