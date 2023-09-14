@@ -10,6 +10,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\RequestLearnController;
 use App\Http\Controllers\ResponseLearnController;
 use App\Http\Controllers\SessionLearnController;
+use App\Http\Controllers\ValidationLearnController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -143,4 +144,29 @@ Route::prefix('belajar-laravel')->group(function() {
     Route::get('/hash', [HashLearnController::class, 'hash_controller']);
 
     Route::post('/hash', [HashLearnController::class, 'hash_process_controller']);
+
+    // Belajar Validation Laravel
+    Route::get('/validation', [ValidationLearnController::class, 'validation_index_controller']);
+
+    Route::prefix('validation')->group(function () {
+        Route::get('/form-1', [ValidationLearnController::class, 'validation_form1_controller']);
+
+        Route::post('/validator-1', [ValidationLearnController::class, 'validator1_controller'])->name('valdiation.rule-1');
+
+        Route::get('/xhr-form', [ValidationLearnController::class, 'xhr_form_controller']);
+
+        Route::post('/xhr-validation', [ValidationLearnController::class, 'xhr_validation_controller']);
+
+        Route::get('/form-2', [ValidationLearnController::class, 'validation_form2_controller']);
+
+        Route::post('/validator-2', [ValidationLearnController::class, 'validator2_controller'])->name('validation.rule-2');
+
+        Route::get('/form-3', [ValidationLearnController::class, 'validation_form3_controller']);
+
+        Route::post('/validator-3', [ValidationLearnController::class, 'validator3_controller'])->name('validation.rule-3');
+
+        Route::get('/form-4', [ValidationLearnController::class, 'validation_form4_controller']);
+
+        Route::post('/validator-4', [ValidationLearnController::class, 'validator4_controller'])->name('validation.rule-4');
+    });
 });
